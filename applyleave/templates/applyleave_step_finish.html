@@ -1,0 +1,70 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Leave Request {% endblock %}
+{% block heading %} APPLY FOR LEAVE {% endblock %}
+
+{% block content %}
+
+
+<form action="{% url 'leave_app_submit' %}" method="post" style="max-width: 70%;" id="leave_app_apply_form">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-header" style="background-color:transparent">LEAVE APPLICATION REVIEW</div>
+        <div class="card-body">
+            <div class="row" hidden>
+                {{ form }}
+            </div>
+            <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Leave Type</span>
+                        <p><strong> {{ form.leave_type.value }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Leave Start Date</span>
+                        <p><strong> {{ form.leave_start.value }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Leave End Date</span>
+                        <p><strong> {{ form.leave_end.value }} </strong></p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Leave Count</span>
+                        <p><strong> {{ total_leave }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Paid Leave</span>
+                        <p style="color:Green"><strong> {{ paid_leave }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Unpaid Leave</span>
+                        <p style="color:Red"><strong> {{ unpaid_leave }} </strong></p>
+                    </div>
+                </div>
+            <div class="form-row">
+                    <div class="form-group col-md-4">
+                        <span class="input-text">Leave Reason</span>
+                        <p><strong> {{ form.reason.value }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-8">
+                        <span class="input-text">Comments</span>
+                        <p><strong> {{ form.comments.value }} </strong></p>
+                    </div>
+            </div>
+        </div>
+            <!--<a href="{% url 'applyleave' %}" role="button" class="btn  btn-primary">Next</a>-->
+            <!--<button type="submit" class="btn btn-primary" id="btn_leave_app_apply">Apply</button>-->
+        </div>
+
+
+    {% if save_message %}
+    <h5><span class="badge" style="color:Green">{{ save_message }}</span></h5>
+    {% else %}
+    <h5><span class="badge" style="color:Red">{{ error_message }}</span></h5>
+    {% endif %}
+
+</form>
+
+
+{% endblock %}

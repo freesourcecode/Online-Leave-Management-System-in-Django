@@ -1,0 +1,145 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Credit Leave {% endblock %}
+{% block heading %} CREDIT LEAVE {% endblock %}
+
+{% block content %}
+
+<form method="post" action="{% url 'credit_leave_get_details' %}">
+    {% csrf_token %}
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <span class="input-text">Financial Year</span>
+                 <select class="form-control" name="financial_year">
+                     {% for fy in obj_fy %}
+                     {% if fy.financial_year == current_fy %}
+                     <option value="{{ current_fy }}" selected>{{ current_fy }}</option>
+                     {% else %}
+                     <option value="{{fy.financial_year}}">{{ fy.financial_year }}</option>
+                     {% endif %}
+                     {% endfor %}
+                 </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <span class="input-text">Employee ID</span>
+                    <div class="input-group mb-2">
+                    <input type="text" class="form-control" name="empid" id="empid" value="{{ obj_employee_details.empid }}" autofocus>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info" name="get_details">Get Details</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-1">
+                    {% if error_msg %}
+                    <span class="input-text"> <strong style="color:red">{{ error_msg }}</strong> </span>
+                    {% else %}
+                    <span class="input-text"> <strong style="color:green">{{ save_message }}</strong> </span>
+                    {% endif %}
+                </div>
+            </div>
+
+        </form>
+
+<!--<hr width="55%" align="left">-->
+
+{% if obj_employee_details %}
+<form method="post" action="{% url 'credit_leave_save' %}" autocomplete="off">
+    {% csrf_token %}
+            <div class="row">
+                <div class="col-md-3 mb-3" hidden>
+                    <span class="input-text">EMP ID</span>
+                    <input type="text" name="empid" id="empid" class="form-control-plaintext" value="{{ obj_employee_details.empid }}" readonly>
+                </div>
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Name</span>
+                    <input type="text" name="name" id="name" class="form-control-plaintext" value="{{ obj_employee_details.name }}" readonly>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <span class="input-text">Company</span>
+                    <input type="text" name="company" id="company" class="form-control-plaintext" value="{{ obj_employee_details.company }}" readonly>
+                </div>
+                <div class="col-md-2 mb-3">
+                    <span class="input-text">Tenure Month</span>
+                    <input type="text" name="tenure_month" id="tenure_month" class="form-control-plaintext" value="{{ tenure_month }}" readonly>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Annual Balance ({{ current_fy }}) </span>
+                    {% if leave_register %}
+                    <input type="text" name="al_closing_balance" class="form-control-plaintext" value="{{ leave_register.al_closing_balance }}" readonly>
+                    {% else %}
+                    <input type="text" name="al_closing_balance" class="form-control-plaintext" value="0.00" readonly>
+                    {% endif %}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Single-Day Balance ({{ current_fy }})</span>
+                    {% if leave_register %}
+                    <input type="text" name="sdl_closing_balance" class="form-control-plaintext" value="{{ leave_register.sdl_closing_balance }}" readonly>
+                    {% else %}
+                    <input type="text" name="sdl_closing_balance" class="form-control-plaintext" value="0.00" readonly>
+                    {% endif %}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">New Financial Year</span>
+                    {{ form.financial_year }}
+                    <!--<select class="form-control" name="financial_year">-->
+                     <!--{% for fy in obj_fy %}-->
+                     <!--<option value="{{fy.financial_year}}">{{ fy.financial_year }}</option>-->
+                     <!--{% endfor %}-->
+                    <!--</select>-->
+                </div>
+                <!--<div class="col-md-3 mb-3">-->
+                    <!--<span class="input-text">Leave Type</span>-->
+                    <!--{{ form.leave_type }}-->
+                <!--</div>-->
+            </div>
+
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Annual - Opening Balance</span>
+                    {{ form.al_opening_balance }}
+                    {{ error }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Credit Leave (in Days)</span>
+                    {{ form.al_credited }}
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Single Day - Opening Balance</span>
+                    {{ form.sdl_opening_balance }}
+                    {{ error }}
+                </div>
+                <div class="col-md-3 mb-3">
+                    <span class="input-text">Credit Leave (in Days)</span>
+                    {{ form.sdl_credited }}
+                </div>
+            </div>
+            <!--<a href="{% url 'applyleave' %}" role="button" class="btn  btn-primary">Next</a>-->
+            <button type="submit" class="btn btn-primary btn-lg" name="save_credit_leave">Save</button>
+            <h4><span class="badge" style="color:Green">{{ message }}</span></h4>
+</form>
+
+{% else %}
+{% endif %}
+
+<script>
+$("#leave_type").change(function(){
+if ($("#leave_type").val()=="Single Day"){
+$("#opening_balance").val(0);
+}
+else{
+$("#opening_balance").val(0);
+}
+});
+</script>
+
+{% endblock %}

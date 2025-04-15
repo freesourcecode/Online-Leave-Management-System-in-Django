@@ -1,0 +1,60 @@
+{% extends 'base.html' %}
+
+{% block title %} Leave Balance {% endblock %}
+{% block heading %} LEAVE BALANCE {% endblock %}
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="alert alert-primary" role="alert">
+            <h5>Annual - Leave Summary</h5>
+        </div>
+
+        <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+
+          <div class="alert alert-success" role="alert">
+           {% for bal in leave_register %}
+          <h4>Opening Balance <span class="badge badge-primary">{{ bal.al_opening_balance }}</span></h4>
+              <hr>
+          <h4>Credited <span class="badge badge-primary">{{ bal.al_credited }}</span></h4>
+              <hr>
+          <h4>Availed <span class="badge badge-info">{{ bal.al_availed }}</span></h4>
+              <hr>
+          <h4>Available Balance <span class="badge badge-success">{{ bal.al_closing_balance }}</span></h4>
+          {% endfor %}
+          </div>
+        <a href="{% url 'applyleave' %}" class="btn btn-primary">Apply For Leave</a>
+      </div>
+    </div>
+  </div>
+  <div class="col-sm-6">
+    <div class="card">
+      <div class="card-body">
+
+        <div class="alert alert-primary" role="alert">
+         <h5>Single Day - Leave Summary</h5>
+        </div>
+
+        <!--<p class="card-text">With supporting text below as a natural lead-in to additional content.</p>-->
+          <div class="alert alert-success" role="alert">
+           {% for bal in leave_register %}
+          <h4>Opening Balance <span class="badge badge-primary">{{ bal.sdl_opening_balance }}</span></h4>
+              <hr>
+          <h4>Credited <span class="badge badge-primary">{{ bal.sdl_credited }}</span></h4>
+              <hr>
+          <h4>Availed <span class="badge badge-info">{{ bal.sdl_availed }}</span></h4>
+              <hr>
+          <h4>Available Balance <span class="badge badge-success">{{ bal.sdl_closing_balance }}</span></h4>
+          {% endfor %}
+          </div>
+        <a href="{% url 'applyleave' %}" class="btn btn-primary">Apply For Leave</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock %}
+

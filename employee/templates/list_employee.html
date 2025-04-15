@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} List of Employee {% endblock %}
+
+{% block heading %} LIST OF EMPLOYEES {% endblock %}
+
+{% block content %}
+
+<form action="{% url 'employee_list' %}" method="post">
+    {% csrf_token %}
+        <!--<div class="card-header">-->
+            <!--<h4 style="color:Blue">LIST OF EMPLOYEES</h4>-->
+            <!--<hr style="border-color:Blue">-->
+
+            <div class="alert alert-primary">
+            <div class="form-row">
+                <div class="input-group col-md-12 md-2">
+                    <div class="col-md-1 mb-1">
+                        <strong>EMP ID</strong>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <strong>NAME</strong>
+                    </div>
+                    <div class="col-md-2 mb-1">
+                        <strong>COMPANY</strong>
+                    </div>
+                    <div class="col-md-2 mb-1">
+                        <strong>DATE OF JOINING</strong>
+                    </div>
+                    <div class="col-md-2 mb-1">
+                        <strong>STATUS</strong>
+                    </div>
+                    <div class="col-md-2 mb-1" align="right">
+                        <strong>ACTION</strong>
+                    </div>
+                </div>
+
+            </div>
+            </div>
+            <!-- Below loop for populate list of employee from Employee Details model -->
+            {% for emp in obj_emp %}
+    <div class="shadow-sm p-0 mb-3 bg-white rounded">
+            <div class="alert alert-primary">
+                <div class="form-row">
+                <div class="input-group col-md-12 mb-2">
+                    <div class="col-md-1 mb-2">
+                       {{ emp.empid }}
+                    </div>
+                    <div class="col-md-3 mb-2">
+                       {{ emp.name }}
+                    </div>
+                    <div class="col-md-2 mb-2">
+                       {{ emp.company }}
+                    </div>
+                    <div class="col-md-2 mb-2">
+                       {{ emp.date_of_joining }}
+                    </div>
+                    <div class="col-md-2 mb-2">
+                       {{ emp.employee_status }}
+                    </div>
+                    <div class="col-md-2 mb-2" align="right">
+                        <div class="btn-group" role="group">
+                            <a href="/employee/{{emp.empid}}/details/" role="button" class="btn btn-primary btn-sm">VIEW</a>
+                            <a href="/employee/{{emp.empid}}/edit/" role="button" class="btn btn-warning btn-sm">EDIT</a>
+                            <a href="/employee/{{emp.empid}}/delete/" role="button" class="btn btn-danger btn-sm">DELETE</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!--<hr style="border-color:White">-->
+            </div>
+    </div>
+            {% endfor %}
+
+</form>
+
+<script>
+     $("#date_of_joining").datepicker({"dateFormat": "yy-mm-dd", changeMonth:true, changeYear:true,
+        onClose: function () {
+       }
+    });
+</script>
+<script>
+    var $leave_category = $( '#leave_category' ),
+		$single_day_entitlement = $( '#single_day_entitlement' ),
+        $annual_entitlement = $( '#annual_entitlement' ),
+        $option1 = $single_day_entitlement.find( 'option' );
+        $option2 = $annual_entitlement.find( 'option' );
+
+$leave_category.on( 'change', function() {
+	$single_day_entitlement.html( $option1.filter( '[name="' + this.value + '"]' ) );
+  $annual_entitlement.html( $option2.filter( '[name="' + this.value + '"]' ) );
+} ).trigger( 'change' );
+</script>
+
+
+{% endblock %}

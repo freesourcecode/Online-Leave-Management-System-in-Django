@@ -1,0 +1,36 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Credit Leave {% endblock %}
+{% block heading %} CREDIT LEAVE {% endblock %}
+{% block content %}
+
+<form method="post" action="{% url 'credit_leave' %}">
+    {% csrf_token %}
+            <div class="row">
+                <div class="col-md-2 mb-3">
+                    <span class="input-text">Financial Year</span>
+                 <select class="form-control" name="financial_year">
+                     {% for fy in obj_fy %}
+                     {% if fy.set_current == 'YES' %}
+                     <option value="{{fy.financial_year}}" selected>{{ fy.financial_year }}</option>
+                     {% else %}
+                     <option value="{{fy.financial_year}}">{{ fy.financial_year }}</option>
+                     {% endif %}
+                     {% endfor %}
+                 </select>
+                </div>
+                <div class="col-md-3 mb-2">
+                    <span class="input-text">Employee ID</span>
+                    <div class="input-group mb-2">
+                    <input type="text" class="form-control" name="empid" id="empid" value="{{ obj_employee_details.empid }}" autofocus>
+                        <div class="input-group-append">
+                            <button type="submit" class="btn btn-info">Get Details</button>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </form>
+
+
+{% endblock %}

@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+{% block title %} Team Leaves {% endblock %}
+{% block heading %} TEAM LEAVES  {% endblock %}
+{% block content %}
+
+<table class="table">
+    <thead>
+    <tr class="alert alert-primary">
+        <th scope="col">LEAVE ID</th>
+        <th scope="col">NAME</th>
+        <th scope="col">LEAVE TYPE</th>
+        <th scope="col">FROM DATE</th>
+        <th scope="col">TO DATE</th>
+        <th scope="col">DAYS</th>
+        <th scope="col">REASON</th>
+        <th scope="col">APPLIED ON</th>
+        <th scope="col">STATUS</th>
+        <th scope="col">ACTION</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for leave in obj_leaves_app %}
+    <tr class="alert alert-light">
+        <td>{{leave.id}}</td>
+        <td>{{leave.name}}</td>
+        <td>{{leave.leave_type}}</td>
+        <td>{{leave.leave_start|date:'d-M-Y'}}</td>
+        <td>{{leave.leave_end|date:'d-M-Y'}}</td>
+        <td>{{leave.days}}</td>
+        <td>{{leave.reason}}</td>
+        <td>{{leave.applied_on|date:'d-M-Y'}}</td>
+        <td>{{leave.status}}</td>
+        <td>
+
+        <a href="/leave/teamleave/{{leave.id}}/view/" role="button" class="btn btn-primary btn-sm">VIEW</a>
+<!--            <div class="dropdown">
+                <button class="btn btn-info dropdown-toggle btn-sm" type="button" id="dropdownMenu2"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    Status
+                </button>
+                <div class="dropdown-menu dropdown-menu-right dropdown-menu-lg-left" aria-labelledby="dropdownMenu2">
+                    <button class="dropdown-item" type="button">APPROVED</button>
+                    <button class="dropdown-item" type="button">REJECTED</button>
+                </div>
+            </div>-->
+        </td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+
+{% endblock %}

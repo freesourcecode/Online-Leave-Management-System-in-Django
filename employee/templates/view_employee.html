@@ -1,0 +1,115 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Employee Details {% endblock %}
+
+{% block heading %} EMPLOYEE DETAILS {% endblock %}
+
+{% block content %}
+
+<form action="/employee/{{emp.empid}}/details/" method="post">
+    {% csrf_token %}
+
+        <div class="form-group row">
+
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Employee ID</span>
+                <div class="form-control">{{ obj_emp.empid }}</div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Name</span>
+                <div class="form-control">{{ obj_emp.name }}</div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Email</span>
+                <div class="form-control">{{ obj_emp.email }}</div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Company</span>
+                <div class="form-control">{{ obj_emp.company }}</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Designation</span>
+                <div class="form-control">{{ obj_emp.designation }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Joining Date</span>
+                <div class="form-control">{{ obj_emp.date_of_joining }}</div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Job Location</span>
+                <div class="form-control">{{ obj_emp.job_location }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Employment Setup</span>
+                <div class="form-control">{{ obj_emp.employment_setup }}</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Gender</span>
+                <div class="form-control">{{ obj_emp.gender }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Marital Status</span>
+                <div class="form-control">{{ obj_emp.marital_status }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">User Type</span>
+                <div class="form-control">{{ obj_emp.user_type }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Weekend Day</span>
+                <div class="form-control">{{ obj_emp.weekend_day }}</div>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Leave Category</span>
+                <div class="form-control">{{ obj_emp.leave_category }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Single Day Entitlement</span>
+                <div class="form-control">{{ obj_emp.single_day_entitlement }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Annual Entitlement</span>
+                <div class="form-control">{{ obj_emp.annual_entitlement }}</div>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Manager ID</span>
+                <div class="form-control">{{ obj_emp.reporting_manager_empid }}</div>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Manager Name</span>
+                <div class="form-control">{{ obj_emp.reporting_manager_name }}</div>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Manager Email</span>
+                <div class="form-control">{{ obj_emp.reporting_manager_email }}</div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Date of Leaving</span>
+                <div class="form-control">{{ obj_emp.date_of_leaving }}</div>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Employee Status</span>
+                <div class="form-control">{{ obj_emp.employee_status }}</div>
+            </div>
+        </div>
+        <a href="{% url 'employee_list' %}" role="button" class="btn btn-primary btn-lg">Back</a>
+
+</form>
+
+{% endblock %}

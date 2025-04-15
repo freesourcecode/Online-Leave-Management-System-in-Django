@@ -1,0 +1,125 @@
+{% load static %}
+
+<html>
+
+<head>
+    <title>{% block title %}User Registration{% endblock %}</title>
+    <!-- Set icon to title -->
+    
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap JS/CSS -->
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+    <link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap-glyphicons.css' %}" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/jquery-ui.css' %}">
+    <script src="{% static 'js/moment.js' %}"></script>
+    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+    <script src="{% static 'js/bootstrap.min.js' %}"></script>
+    <script src="{% static 'js/popper.min.js' %}"></script>
+</head>
+
+<body>
+
+<div class="container" style="width:740px; padding:20px;">
+    <div class="card text">
+        <center>
+            <div class="card-header"><img id="profile-img" class="profile-img-card"
+                                          src="{% static 'images/logo2.png' %}" width="4%" height="5%"/>
+                <h3><strong>LEAVE MANAGEMENT PORTAL</strong></h3></div>
+        </center>
+        <div class="card-body">
+            <h5 align="left">New User Registration Form</h5>
+            <hr color="Blue">
+
+            <!-- validate email -->
+            <form method="post" action="{% url 'register' %}" class="form-signin" autocomplete="off">
+                {% csrf_token %}
+                <div class="form-row">
+                    <div class="input-group col-md-6 mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Email</div>
+                        </div>
+                        {{ form.email }}
+
+                    </div>
+                    <div class="input-group col-md-6 mb-2">
+                        <div class="input-group-prepend">
+                            <div class="input-group-text">Username</div>
+                        </div>
+                        {{ form.username }}
+                    </div>
+                </div>
+                <div class="form-row">
+                <div class="input-group col-md-6 mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">First Name</div>
+                    </div>
+                    {{ form.first_name }}
+                </div>
+                <div class="input-group col-md-6 mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Last Name</div>
+                    </div>
+                    {{ form.last_name }}
+                </div>
+                </div>
+
+                <div class="form-row">
+                <div class="input-group col-md-6 mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Password</div>
+                    </div>
+                    {{ form.password }}
+                    {{ form.password.errors }}
+                </div>
+                <div class="input-group col-md-6 mb-2">
+                    <div class="input-group-prepend">
+                        <div class="input-group-text">Confirm Password</div>
+                    </div>
+                {{ form.confirm_password }}
+                </div>
+                </div>
+                    <!-- invalid credentials -->
+                    {% if error_msg %}
+                    <div id="error_msg"><p style="color:red">{{ error_msg }}</p></div>
+                    {% else %}
+                    <div id="success_msg"><strong><p style="color:green">{{ success_msg }}</p></strong></div>
+                    {% endif %}
+                    <!-- invalid credentials -->
+                <div class="input-group-append">
+                            <button class="btn btn-primary" type="submit">Register</button>
+                </div>
+            </form>
+        </div> <!-- /close Card body -->
+
+        <div class="card-footer text-muted">
+            <table width="100%">
+                <tr>
+                    <td align="left" width="20%">
+                        <a href="{% url 'login' %}" class="">Already Register</a>
+                    </td>
+                    <td align="right" width="30%">
+                        <a href="#" class="forgot-password">Forgot the password?</a>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</div>
+<script>
+$(function() {
+    var content = $('#email').val();
+    $('#email').keyup(function()
+    {
+        if ($('#email').val() != content) {
+            content = $('#email').val();
+            $('#error_msg').hide();
+            $('#success_msg').hide();
+            //alert('Content has been changed');
+        }
+    });
+});
+</script>
+</body>
+</html>

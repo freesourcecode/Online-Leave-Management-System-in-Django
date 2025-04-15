@@ -1,0 +1,53 @@
+{% extends 'base.html' %}
+
+{% block title %} My Leaves {% endblock %}
+
+{% block heading %} MY LEAVES  {% endblock %}
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr class="alert alert-primary">
+      <th scope="col">ID</th>
+      <th scope="col">LEAVE TYPE</th>
+      <th scope="col">FROM DATE</th>
+      <th scope="col">TO DATE</th>
+      <th scope="col">DAYS</th>
+      <th scope="col">REASON</th>
+      <th scope="col">APPLIED ON</th>
+      <th scope="col">STATUS</th>
+      <th scope="col">ACTION</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for leave in obj_leaves_app %}
+    <tr class="alert alert-light">
+      <td>{{leave.id}}</td>
+      <td>{{leave.leave_type}}</td>
+      <td>{{leave.leave_start|date:'d-M-Y'}}</td>
+      <td>{{leave.leave_end|date:'d-M-Y'}}</td>
+      <td>{{leave.days}}</td>
+      <td>{{leave.reason}}</td>
+      <td>{{leave.applied_on|date:'d-M-Y'}}</td>
+      <td>{{leave.status}}</td>
+      <td>
+          <!--<span class="fa fa-eye"></span>-->
+          <!--<span class="fa fa-edit"></span>-->
+          <!--<span class="fa fa-trash"></span>-->
+<!-- Example single danger button -->
+    <div class="btn-group">
+    <div class="btn-group" role="group">
+        <a href="/leave/myleave/{{leave.id}}/view/" role="button" class="btn btn-primary btn-sm">VIEW</a>
+        <a href="/leave/myleave/{{leave.id}}/cancel/" role="button" class="btn btn-danger btn-sm">CANCEL</a>
+    </div>
+    </div>
+
+      </td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+
+{% endblock %}

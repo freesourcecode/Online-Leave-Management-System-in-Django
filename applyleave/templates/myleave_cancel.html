@@ -1,0 +1,85 @@
+{% extends 'base.html' %}
+
+{% block title %} My Leaves {% endblock %}
+
+{% block heading %} MY LEAVES  {% endblock %}
+
+{% block content %}
+<!--/myleave/{{leave.leaveid}}/cancel/   obj_leave_app.id-->
+<form action="" method="post" style="max-width: 100%;">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-body">
+            <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave ID</span>
+                        <p><strong> {{ obj_leave_app.id }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave Type</span>
+                        <p><strong> {{ obj_leave_app.leave_type }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Application Date</span>
+                        <p><strong> {{ obj_leave_app.applied_on }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Status</span>
+                        <p><strong> {{ obj_leave_app.status }} </strong></p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave Start Date</span>
+                        <p><strong> {{ obj_leave_app.leave_start }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave End Date</span>
+                        <p><strong> {{ obj_leave_app.leave_end }} </strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave Count</span>
+                        <p><strong> {{ obj_leave_app.days }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Leave Reason</span>
+                        <p><strong> {{ obj_leave_app.reason }} </strong></p>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Full Day</span>
+                        <p><strong> {{ full_day }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Half Day</span>
+                        <p><strong> {{ half_day }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Paid Leave</span>
+                        <p style="color:Green"><strong> {{ obj_leave_app.paid_leave }}</strong></p>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <span class="input-text">Unpaid Leave</span>
+                        <p style="color:Red"><strong> {{ obj_leave_app.unpaid_leave }} </strong></p>
+                    </div>
+                </div>
+            <div class="form-row">
+                    <div class="form-group col-md-9">
+                        <span class="input-text">Comments</span>
+                        <p><strong> {{ obj_leave_app.comments }} </strong></p>
+                    </div>
+            </div>
+            {% if obj_leave_app.status == "CANCELLED" or obj_leave_app.status == "APPROVED" or obj_leave_app.status == "DECLINED" %}
+            <a href="{% url 'my_leave' %}" role="button" class="btn  btn-primary">Back</a>
+            {% else %}
+            <a href="{% url 'my_leave' %}" role="button" class="btn  btn-primary">Back</a>
+            <!--<a href="{% url 'my_leave' %}" role="button" class="btn  btn-primary">Cancel</a>-->
+            <button type="submit" class="btn btn-danger" id="btn_leave_app_apply">Cancel</button>
+            {% endif %}
+        </div>
+            <h2 align="left"><span class="badge" style="color:Red">{{ save_message }}</span></h2>
+        </div>
+</form>
+
+{% endblock %}

@@ -1,0 +1,12 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+"psycopg2" = "==2.7.5"
+pytz = "==2018.5"
+Django = "==2.2.4"
+
+[requires]
+python_version = "3.7"

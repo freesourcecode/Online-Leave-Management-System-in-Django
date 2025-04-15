@@ -1,0 +1,89 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %} Leave Request {% endblock %}
+{% block heading %} APPLY FOR LEAVE {% endblock %}
+
+{% block content %}
+
+<form action="{% url 'leave_app_review' %}" method="post" style="max-width: 70%;" id="leave_app_review_form">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-header" style="background-color:transparent">LEAVE APPLICATION DATE WISE BREAKUP</div>
+        <div class="card-body">
+
+
+            <!--<hr style="border-color:Blue">-->
+            <div class="row" hidden>
+                {{ form }}
+            </div>
+            <!--<div class="alert alert-primary">-->
+            <div class="form-row">
+                <div class="input-group col-md-12 md-2">
+                    <div class="col-md-3 mb-1">
+                        <strong>LEAVE DATE</strong>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <strong>LEAVE FOR</strong>
+                    </div>
+                    <div class="col-md-3 mb-1" hidden>
+                        <strong>LEAVE COUNT</strong>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <strong>REMARKS</strong>
+                    </div>
+                </div>
+
+            </div>
+            <!--</div>-->
+            <!-- Below loop for populate date wise leaves  -->
+            <!--<div class="alert alert-primary">-->
+
+            <div class="form-row">
+                {% for key,value in obj_leave_date_list.items %}
+                <div class="input-group col-md-12 mb-2">
+                    <div class="col-md-3 mb-2">
+                        <input type="text" class="form-control" name="leave_start_{{ key|date:'Y-m-d' }}"
+                               value="{{ key|date:'Y-m-d' }}" readonly>
+                        <!-- obj_leave_app.leave_start|date:'d-M-Y' -->
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <select class="form-control" name="leave_for_{{ key|date:'Y-m-d' }}" id="leave_for">
+                            {% if value == 'Full Day' %}
+                            <option value="{{ value }}" selected>{{ value }}</option>
+                            <option value="First Half">First Half</option>
+                            <option value="Second Half">Second Half</option>
+                            {% elif value == 'First Half' %}
+                            <option value="{{ value }}" selected>{{ value }}</option>
+                            <option value="Full Day">Full Day</option>
+                            <option value="Second Half">Second Half</option>
+                            {% elif value == 'Second Half' %}
+                            <option value="{{ value }}" selected>{{ value }}</option>
+                            <option value="Full Day">Full Day</option>
+                            <option value="First Half">First Half</option>
+                            {% else %}
+                            <option value="{{ value }}" selected>Full Day</option>
+                            <option value="First Half">First Half</option>
+                            <option value="Second Half">Second Half</option>
+                            {% endif %}
+                        </select>
+                    </div>
+                    <div class="col-md-3 mb-2" hidden>
+                        <input class="form-control" id="days" name="days_{{ key|date:'Y-m-d' }}" value="" readonly>
+                    </div>
+                    <div class="col-md-3 mb-2">
+                        <input class="form-control" name="remark_{{ key|date:'Y-m-d' }}" value="{{ key|date:'l' }}"
+                               readonly>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+
+            <button class="btn btn-primary" type="submit">Next</button>
+            <!--<a href="/applyleave/?from={{ request.path|urlencode }}" role="button" class="btn  btn-primary">Back</a>-->
+        </div>
+    </div>
+
+</form>
+
+
+{% endblock %}

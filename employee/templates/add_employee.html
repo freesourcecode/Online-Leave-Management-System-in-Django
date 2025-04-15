@@ -1,0 +1,98 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Add Employee {% endblock %}
+
+{% block heading %} ADD EMPLOYEE {% endblock %}
+
+{% block content %}
+
+
+<form action="{% url 'add_employee' %}" method="post" autocomplete="off">
+    {% csrf_token %}
+
+    <h2><span class="badge" style="color:Green">{{ save_message }}</span></h2>
+            <div class="form-group row">
+                {% for field in form %}
+
+                 {% if field.name == 'single_day_entitlement' %}
+                    <div class="col-md-3 mb-2">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <select class="form-control" id="single_day_entitlement" name="single_day_entitlement">
+                         {% for lc in obj_LeaveCategory %}
+                          <option name="{{ lc.name }}" value="{{ lc.single_day_entitlement }}">{{ lc.single_day_entitlement }}</option>
+                         {% endfor %}
+                        </select>
+                    </div>
+
+                 {% elif field.name == 'annual_entitlement' %}
+                    <div class="col-md-3 mb-2">
+                        <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                        <select class="form-control" id="annual_entitlement" name="annual_entitlement">
+                         {% for lc in obj_LeaveCategory %}
+                          <option name="{{ lc.name }}" value="{{ lc.annual_entitlement }}">{{ lc.annual_entitlement }}</option>
+                         {% endfor %}
+                        </select>
+                    </div>
+                <!-- Below code for display rest of the field in AddEmployeeForm(ModelForm) -->
+                {% else %}
+                <div class="col-md-3 mb-2">
+                    <label for="{{ field.id_for_label }}" class="form-label">{{ field.label }}</label>
+                 {{ field }}
+                </div>
+                {% endif %}
+                {% endfor %}
+            </div>
+
+                {% if save_message %}
+                <a href="{% url 'add_employee' %}" role="button" class="btn btn-primary btn-lg">Close</a>
+                {% else %}
+                <button class="btn btn-primary btn-lg" type="submit">Save</button>
+                {% endif %}
+
+            <div class="form-group row">
+                <div class="col-md-12 mb-2">
+                <!-- Error Handling -->
+                {% if form.errors %}
+                {% for field in form %}
+                {% for error in field.errors %}
+                <div class="alert alert-danger">
+                <strong>{{ form.errors|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                <div class="alert alert-danger">
+                <strong>{{ error|escape }}</strong>
+                </div>
+                {% endfor %}
+                {% endif %}
+                <!-- /Error Handling -->
+            </div>
+            </div>
+
+</form>
+
+
+<script>
+     $("#date_of_joining").datepicker({"dateFormat": "yy-mm-dd", changeMonth:true, changeYear:true, showButtonPanel:true,todayHighlight: true, autoclose: true, todayBtn: true,
+        onClose: function () {
+       }
+    });
+</script>
+<script>
+    var $leave_category = $( '#leave_category' ),
+		$single_day_entitlement = $( '#single_day_entitlement' ),
+        $annual_entitlement = $( '#annual_entitlement' ),
+        $option1 = $single_day_entitlement.find( 'option' );
+        $option2 = $annual_entitlement.find( 'option' );
+
+$leave_category.on( 'change', function() {
+	$single_day_entitlement.html( $option1.filter( '[name="' + this.value + '"]' ) );
+  $annual_entitlement.html( $option2.filter( '[name="' + this.value + '"]' ) );
+} ).trigger( 'change' );
+</script>
+
+
+
+{% endblock %}

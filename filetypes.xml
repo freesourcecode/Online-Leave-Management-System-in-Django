@@ -1,0 +1,8 @@
+<application>
+  <component name="FileTypeManager" version="17">
+    <extensionMap>
+      <mapping pattern="neww.py" type="PLAIN_TEXT" />
+      <mapping pattern="neww" type="Python" />
+    </extensionMap>
+  </component>
+</application>

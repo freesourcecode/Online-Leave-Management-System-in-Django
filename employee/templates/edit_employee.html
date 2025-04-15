@@ -1,0 +1,257 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Edit Employee {% endblock %}
+
+{% block heading %} EDIT EMPLOYEE DETAILS {% endblock %}
+
+{% block content %}
+
+<form action="/employee/{{obj_emp.empid}}/edit/" method="post" autocomplete="off">
+    {% csrf_token %}
+
+        <div class="form-group row">
+
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Employee ID</span>
+                <input class="form-control" id="empid" name="empid" value="{{ obj_emp.empid }}"/>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Name</span>
+                <input class="form-control" id="name" name="name" value="{{ obj_emp.name }}"/>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Email</span>
+                <input class="form-control" id="email" name="email" value="{{ obj_emp.email }}"/>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Company</span>
+                <select class="form-control" name="company" id="company">
+                    <option id="company_0" value="{{ obj_emp.company }}">{{ obj_emp.company }}</option>
+                    {% for c in obj_Company %}
+                    {% if c.name == obj_emp.company %}
+                    {% else %}
+                    <option id="{{ c.id }}" value="{{c.name}}">{{ c.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Designation</span>
+                <input class="form-control" id="designation" name="designation" value="{{ obj_emp.designation }}"/>
+            </div>
+
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Joining Date</span>
+                <div class="form-group">
+                <div class="input-group date" id="datepicker">
+                <input type="text" class="form-control" data-date-format="yyyy-mm-dd" id="date_of_joining" name="date_of_joining" value="{{ obj_emp.date_of_joining|date:'Y-m-d' }}"/>
+                <div class="input-group-append">
+                    <span class="input-group-text">
+                        <span class="glyphicon glyphicon-calendar"></span>
+                    </span>
+                </div></div></div>
+            </div>
+
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Job Location</span>
+                <select class="form-control" name="job_location" id="job_location">
+                    <option id="job_location_0" value="{{ obj_emp.job_location }}">{{ obj_emp.job_location }}</option>
+                    {% for wl in obj_Job_Location %}
+                    {% if wl.job_location == obj_emp.job_location %}
+                    {% else %}
+                    <option id="{{ wl.job_location }}" value="{{wl.job_location}}">{{ wl.job_location }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Employment Setup</span>
+                <select class="form-control" name="employment_setup" id="employment_setup">
+                    <option id="employment_setup_0" value="{{ obj_emp.employment_setup }}">{{ obj_emp.employment_setup }}</option>
+                    {% for es in obj_Emp_Setup %}
+                    {% if es.employment_setup == obj_emp.employment_setup %}
+                    {% else %}
+                    <option id="{{ es.employment_setup }}" value="{{es.employment_setup}}">{{ es.employment_setup }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Gender</span>
+                <select class="form-control" name="gender" id="gender">
+                    <option id="gender_0" value="{{ obj_emp.gender }}">{{ obj_emp.gender }}</option>
+                    {% for g in obj_Gender %}
+                    {% if g.gender == obj_emp.gender %}
+                    {% else %}
+                    <option id="{{ g.gender }}" value="{{g.gender}}">{{ g.gender }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Marital Status</span>
+                <select class="form-control" name="marital_status" id="marital_status">
+                    <option id="marital_status_0" value="{{ obj_emp.marital_status }}">{{ obj_emp.marital_status }}</option>
+                    {% for ms in obj_Marital_Status %}
+                    {% if ms.marital_status == obj_emp.marital_status %}
+                    {% else %}
+                    <option id="{{ ms.marital_status }}" value="{{ms.marital_status}}">{{ ms.marital_status }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">User Type</span>
+                <select class="form-control" name="user_type" id="user_type">
+                    <option id="user_type_0" value="{{ obj_emp.user_type }}">{{ obj_emp.user_type }}</option>
+                    {% for ut in obj_User_Type %}
+                    {% if ut.user_type == obj_emp.user_type %}
+                    {% else %}
+                    <option id="{{ ut.user_type }}" value="{{ut.user_type}}">{{ ut.user_type }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Weekend Day</span>
+                <select class="form-control" name="weekend_day" id="weekend_day">
+                    <option id="weekend_day_0" value="{{ obj_emp.weekend_day }}">{{ obj_emp.weekend_day }}</option>
+                    {% for wd in obj_Weekend_Day %}
+                    {% if wd.weekend_day == obj_emp.weekend_day %}
+                    {% else %}
+                    <option id="{{ wd.weekend_day }}" value="{{wd.weekend_day}}">{{ wd.weekend_day }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+        </div>
+
+        <div class="form-group row">
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Leave Category</span>
+                <select class="form-control" name="leave_category" id="leave_category">
+                    <option id="leave_category_0" value="{{ obj_emp.leave_category }}">{{ obj_emp.leave_category }}</option>
+                    {% for lc in obj_LeaveCategory %}
+                    {% if lc.name == obj_emp.leave_category %}
+                    {% else %}
+                    <option id="{{ lc.name }}" value="{{lc.name}}">{{ lc.name }}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+                <!--<div class="form-control">{{ obj_emp.leave_category }}</div>-->
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Single Day Entitlement</span>
+                    <select class="form-control" id="single_day_entitlement" name="single_day_entitlement">
+                    <option name="single_day_entitlement_0">{{ obj_emp.single_day_entitlement }}</option>
+                     {% for lc in obj_LeaveCategory %}
+                      <option name="{{ lc.name }}">{{ lc.single_day_entitlement }}</option>
+                     {% endfor %}
+                    </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Annual Entitlement</span>
+                    <select class="form-control" id="annual_entitlement" name="annual_entitlement">
+                    <option name="annual_entitlement_0">{{ obj_emp.annual_entitlement }}</option>
+                     {% for lc in obj_LeaveCategory %}
+                      <option name="{{ lc.name }}">{{ lc.annual_entitlement }}</option>
+                     {% endfor %}
+                    </select>
+            </div>
+            <div class="col-md-3 mb-2">
+                <span class="input-text">Manager ID</span>
+                <input type="text" class="form-control" id="reporting_manager_empid" name="reporting_manager_empid" value="{{ obj_emp.reporting_manager_empid }}"/>
+            </div>
+        </div>
+
+
+        <div class="form-group row">
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Manager Name</span>
+                <input type="text" class="form-control" id="reporting_manager_name" name="reporting_manager_name" value="{{ obj_emp.reporting_manager_name }}"/>
+            </div>
+            <div class="col-md-4 mb-2">
+                <span class="input-text">Manager Email</span>
+                <input type="text" class="form-control" id="reporting_manager_email" name="reporting_manager_email" value="{{ obj_emp.reporting_manager_email }}"/>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Date of Leaving</span>
+                <input type="text" class="form-control" data-date-format="yyyy-mm-dd" id="date_of_leaving" name="date_of_leaving" value="{{ obj_emp.date_of_leaving|date:'Y-m-d' }}"/>
+            </div>
+            <div class="col-md-2 mb-2">
+                <span class="input-text">Employee Status</span>
+                    <select class="form-control" id="employee_status" name="employee_status">
+                    <option name="employee_status_0">{{ obj_emp.employee_status }}</option>
+                     {% for es in obj_Emp_Status %}
+                     {% if es.employee_status == obj_emp.employee_status %}
+                     {% else %}
+                      <option name="{{ es.employee_status }}">{{ es.employee_status }}</option>
+                     {% endif %}
+                     {% endfor %}
+                    </select>
+
+            </div>
+        </div>
+
+         <div class="form-group row">
+            <div class="col-md-3 mb-2">
+                <button class="btn btn-primary btn-lg" type="submit">Update</button>
+                <a href="{% url 'employee_list' %}" role="button" class="btn btn-primary btn-lg">Back</a>
+            </div>
+            <div class="col-md-9 mb-2">
+                <h2 align="left"><span class="badge" style="color:Green">{{ save_message }}</span></h2>
+            </div>
+         </div>
+        <!-- Error Handling -->
+                    {% if form.errors %}
+                    {% for field in form %}
+                    {% for error in field.errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ form.errors|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                    <div class="alert alert-danger">
+                    <strong>{{ error|escape }}</strong>
+                    </div>
+                    {% endfor %}
+                    {% endif %}
+        <!-- /Error Handling -->
+
+</form>
+
+<script>
+     $("#date_of_joining").datepicker({"dateFormat": "yy-mm-dd", changeMonth:true, changeYear:true, showButtonPanel:true, todayHighlight: true, autoclose: true, todayBtn: true,
+        onClose: function () {
+       }
+    });
+    $("#date_of_leaving").datepicker({"dateFormat": "yy-mm-dd", changeMonth:true, changeYear:true, showButtonPanel:true, todayHighlight: true, autoclose: true, todayBtn: true,
+        onClose: function () {
+       }
+    });
+</script>
+<script>
+    var $leave_category = $( '#leave_category' ),
+		$single_day_entitlement = $( '#single_day_entitlement' ),
+        $annual_entitlement = $( '#annual_entitlement' ),
+        $option1 = $single_day_entitlement.find( 'option' );
+        $option2 = $annual_entitlement.find( 'option' );
+
+$leave_category.on( 'change', function() {
+	$single_day_entitlement.html( $option1.filter( '[name="' + this.value + '"]' ) );
+  $annual_entitlement.html( $option2.filter( '[name="' + this.value + '"]' ) );
+} ).trigger( 'change' );
+</script>
+
+
+{% endblock %}

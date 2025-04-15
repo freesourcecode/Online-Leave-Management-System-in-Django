@@ -1,0 +1,156 @@
+{% extends 'base.html' %}
+
+{% block title %} Team Leaves {% endblock %}
+
+{% block heading %} TEAM LEAVES  {% endblock %}
+
+{% block content %}
+
+<!--<form action="/leave/teamleave/{{leave.leaveid}}/view/" method="post" style="max-width: 100%;">-->
+<form action="{% url 'team_leave_action' %}" method="post" style="max-width: 100%;">
+    {% csrf_token %}
+    <div class="card">
+        <div class="card-body">
+            <div class="form-group row">
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Employee Name</span>
+                        <p><strong> {{ obj_leave_app.name }} </strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Leave Type</span>
+                        <p><strong> {{ obj_leave_app.leave_type }} </strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Application Date</span>
+                        <p><strong> {{ obj_leave_app.applied_on }} </strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Status</span>
+                        <p><strong> {{ obj_leave_app.status }} </strong></p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Leave Start Date</span>
+                        <p><strong> {{ obj_leave_app.leave_start }} </strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Leave End Date</span>
+                        <p><strong> {{ obj_leave_app.leave_end }} </strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Leave Count</span>
+                        <p><strong> {{ obj_leave_app.days }}</strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Leave Reason</span>
+                        <p><strong> {{ obj_leave_app.reason }} </strong></p>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Full Day</span>
+                        <p><strong> {{ full_day }}</strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Half Day</span>
+                        <p><strong> {{ half_day }}</strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Paid Leave</span>
+                        <p style="color:Green"><strong> {{ obj_leave_app.paid_leave }}</strong></p>
+                    </div>
+                    <div class="col-md-3 mb-1">
+                        <span class="input-text">Unpaid Leave</span>
+                        <p style="color:Red"><strong> {{ obj_leave_app.unpaid_leave }} </strong></p>
+                    </div>
+                </div>
+            <div class="form-group row">
+                    <div class="col-md-12 mb-1">
+                        <span class="input-text">Comments</span>
+                        <p><strong> {{ obj_leave_app.comments }} </strong></p>
+                    </div>
+            </div>
+            <!--<hr>-->
+            <!-- Manager Action -->
+            {% if obj_leave_app.status == "CANCELLED" or obj_leave_app.status == "DECLINED" or obj_leave_app.status == "APPROVED" %}
+            <a href="{% url 'team_leave' %}" role="button" class="btn  btn-primary">Back</a>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#leavedetails">Details</button>
+            {% else %}
+
+            <div class="form-group row">
+                <div class="col-md-2 mb-1">
+                    <label class="my-1 mr-2">Manager Action</label>
+                    {{ form.manager_action }}
+                </div>
+                {% if obj_leave_app.unpaid_leave > 0 %}
+                <div class="col-md-2 mb-1">
+                    <label class="my-1 mr-2">Category</label>
+                    {{ form.category }}
+                </div>
+                {% else %}
+                {% endif %}
+                <div class="col-md-4 mb-1">
+                    <label class="my-1 mr-2">Remarks </label>
+                    {{ form.manager_remarks }}
+                </div>
+
+            </div>
+            <center>
+            <a href="{% url 'team_leave' %}" role="button" class="btn  btn-primary">Back</a>
+            <button type="submit" class="btn btn-success">Update</button>
+            <button type="button" class="btn btn-info" data-toggle="modal" data-target="#leavedetails">Details</button>
+                </center>
+            {% endif %}
+                </div>
+            </div>
+
+    <h2 align="left"><span class="badge" style="color:Green">{{ save_message }}</span></h2>
+    <h2 align="left"><span class="badge" style="color:Red">{{ error_message }}</span></h2>
+
+</form>
+
+<!-- Modal -->
+<div class="modal fade" id="leavedetails" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Leave Details</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+
+      <table class="table">
+  <thead>
+    <tr class="alert alert-primary">
+      <th scope="col">LEAVE DATE</th>
+      <th scope="col">DAY</th>
+      <th scope="col">LEAVE FOR</th>
+      <th scope="col">LEAVE COUNT</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for leave in leave_details %}
+    <tr class="alert alert-light">
+      <td>{{leave.leave_start|date:'d-M-Y'}}</td>
+      <td>{{leave.leave_end|date:'D'}}</td>
+      <td>{{leave.leave_for}}</td>
+      <td align="center">{{leave.days}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+{% endblock %}

@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %} Home {% endblock %}
+
+{% block heading %} Welcome to Leave Management Portal {% endblock %}
+
+{% block content %}
+
+<div class="card" style="width: 15rem;">
+  <div class="card-body">
+    <h5 class="card-title">Leave Balance</h5>
+    <p class="card-text">Check your leave balance.</p>
+    <a href="{% url 'leave_balance' %}" class="btn btn-primary">Check</a>
+  </div>
+</div>
+
+
+{% endblock %}

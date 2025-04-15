@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %} Holiday List {% endblock %}
+
+{% block heading %} HOLIDAY CALENDAR - ( {{obj_fy.financial_year}} ) {% endblock %}
+
+{% block content %}
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">DATE</th>
+      <th scope="col">DAY</th>
+      <th scope="col">OCCASION</th>
+      <th scope="col">TYPE</th>
+      <th scope="col">LOCATION</th>
+    </tr>
+  </thead>
+  <tbody>
+  {% for holiday in obj_holiday %}
+    <tr>
+      <th scope="row">{{holiday.event_date|date:'d-M-Y'}}</th>
+      <td>{{holiday.event_date|date:'l'}}</td>
+      <td>{{holiday.event_name}}</td>
+      <td>{{holiday.event_type}}</td>
+      <td>{{holiday.location}}</td>
+    </tr>
+  {% endfor %}
+  </tbody>
+</table>
+
+{% endblock %}
